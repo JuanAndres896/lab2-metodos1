@@ -9,7 +9,7 @@ Laboratorio No. 2
 import math
 # Funcion de prueba
 def f(x):
-    return 3*x + 7
+    return x**3 + 3*x - 1
 # Metodo de biseccion
 # Parametros: extremos del intervalo (xl, xu), error estimado (er) y forma de desplegar la respuesta (f)
 def biseccion(xl,xu,er):
@@ -30,9 +30,9 @@ def biseccion(xl,xu,er):
 # Metodo de falsa posicion
 # Parametros: extremos del intervalo (xl, xu), error estimado (er) y forma de desplegar la respuesta (f)
 def falsapos(xl,xu,er):
-    xr = xl - f(xl)*((xu-xl)/(f(xu)-f(xl)))
+    xr = (xl - f(xl)*((xu-xl)/(f(xu)-f(xl))))
     iteraciones = 0
-    while (xu - xl) / 2.0 > er:
+    while xr > er:
         if f(xr) == 0:
             return xr
         elif f(xl) * f(xr) < 0:
@@ -41,7 +41,7 @@ def falsapos(xl,xu,er):
         else:
             xl = xr
             iteraciones = iteraciones + 1
-        xr = xl - f(xl)*((xu-xl)/(f(xu)-f(xl)))
+        xr = (xl - f(xl)*((xu-xl)/(f(xu)-f(xl))))
     print "El cero estimado de la funcion es:", xr
     print "El numero de iteraciones fue:", iteraciones
-falsapos(-5,5,0.0001)
+falsapos(-1.0,1.0,0.000001)
