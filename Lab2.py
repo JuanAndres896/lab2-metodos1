@@ -35,8 +35,6 @@ def falsapos(xl,xu,er):
     xu2 = 0
     iteraciones = 0
     while xr > er:
-        xl2 = xl
-        xu2 = xu
         if f(xr) == 0:
             return xr
         elif f(xl) * f(xr) < 0:
@@ -46,10 +44,10 @@ def falsapos(xl,xu,er):
             xl = xr
             iteraciones = iteraciones + 1
         xr = (xl - f(xl)*((xu-xl)/(f(xu)-f(xl))))
-        if xl2 == xl:
+        if xu2 == xu and xl2 == xl:
             break
-        if xu2 == xu:
-            break
+        xl2 = xl
+        xu2 = xu
     print "El cero estimado de la funcion es:", xr
     print "El numero de iteraciones fue:", iteraciones
 falsapos(0.0,1.0,0.000001)
