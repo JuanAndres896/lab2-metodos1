@@ -64,7 +64,9 @@ def falsapos(xl,xu,er):
 def newtonraphson(x0,er,n):
     x0 = float(x0)
     resultados = [[0,x0,None]]
-    fprima = diff(f,"x")
+    x = symbols('x')
+    ff = x**3 + 3*x -1
+    fprima = diff(ff,"x")
     for i in range(1,n):
         try:
             xsuc = x0 - f(x0)/derivada(str(fprima),x0)
@@ -76,5 +78,4 @@ def newtonraphson(x0,er,n):
         resultados.append(r)
         x0 = xsuc
     return resultados
-
-
+newtonraphson(1,0.00001,20)
