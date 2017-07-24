@@ -7,9 +7,18 @@ Laboratorio No. 2
 24/07/017
 '''
 import math
+from sympy import *
 # Funcion de prueba
 def f(x):
     return x**3 + 3*x - 1
+# Funcion para calcular derivadas en un punto
+def derivada(f,x):
+    xi = float(x)
+    try:
+        y = eval(f)
+        return y
+    except:
+        exit("Error")
 # Metodo de biseccion
 # Parametros: extremos del intervalo (xl, xu), error estimado (er) y forma de desplegar la respuesta (f)
 def biseccion(xl,xu,er):
@@ -50,4 +59,22 @@ def falsapos(xl,xu,er):
         xu2 = xu
     print "El cero estimado de la funcion es:", xr
     print "El numero de iteraciones fue:", iteraciones
-falsapos(0.0,1.0,0.000001)
+# Metodo de Newton-Raphson
+# Parametros: aproximacion inicial (x0), error estimado (er), iteraciones (n), forma de desplegar la respuesta (f)
+def newtonraphson(x0,er,n):
+    x0 = float(x0)
+    resultados = [[0,x0,None]]
+    fprima = diff(f,"x")
+    for i in range(1,n):
+        try:
+            xsuc = x0 - f(x0)/derivada(str(fprima),x0)
+        except:
+            print "Division entre cero, error."
+            break
+        ea = 100*(abs(xsuc-x0/xsuc))
+        r = [i,xsuc,ea]
+        resultados.append(r)
+        x0 = xsuc
+    return resultados
+
+
