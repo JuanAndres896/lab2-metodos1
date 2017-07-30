@@ -6,22 +6,17 @@ Juan Andrés García - 15046
 Laboratorio No. 2
 24/07/017
 '''
-import math
-from sympy import *
 # Funcion de prueba
 def f(x):
-    return x**3 + 3*x - 1
+    f = x**3 + 3*x - 1
+    return f
 # Funcion para calcular derivadas en un punto
-def derivada(f,x):
-    xi = float(x)
-    try:
-        y = eval(f)
-        return y
-    except:
-        exit("Error")
+def derivada(x,h):
+    df = (f(x+h)-f(x))/h
+    return df
 # Metodo de biseccion
-# Parametros: extremos del intervalo (xl, xu), error estimado (er) y forma de desplegar la respuesta (f)
-def biseccion(xl,xu,er):
+# Parametros: extremos del intervalo (xl, xu), error estimado (er) y forma de desplegar la respuesta (d)
+def biseccion(xl,xu,er,d):
     xr = (xl + xu)/2.0
     iteraciones = 0
     while (xu-xl)/2.0 > er:
@@ -34,12 +29,15 @@ def biseccion(xl,xu,er):
             xl = xr
             iteraciones = iteraciones +1
         xr = (xl+xu)/2.0
-    print "El cero estimado de la funcion es:",xr
-    print "El numero de iteraciones fue:",iteraciones
+    if d == 2:
+        print "El cero estimado de la funcion es:",xr
+        print "El numero de iteraciones fue:",iteraciones
+    elif d==1:
+        print "El cero estimado de la funcion es:",xr
 # Metodo de falsa posicion
-# Parametros: extremos del intervalo (xl, xu), error estimado (er) y forma de desplegar la respuesta (f)
-def falsapos(xl,xu,er):
-    xr = (xl - f(xl)*((xu-xl)/(f(xu)-f(xl))))
+# Parametros: extremos del intervalo (xl, xu), error estimado (er) y forma de desplegar la respuesta (d)
+def falsapos(xl,xu,er,d):
+    xr = xl - f(xl)*(xu-xl)/f(xu)-f(xl)
     xl2 = 0
     xu2 = 0
     iteraciones = 0
@@ -57,25 +55,22 @@ def falsapos(xl,xu,er):
             break
         xl2 = xl
         xu2 = xu
-    print "El cero estimado de la funcion es:", xr
-    print "El numero de iteraciones fue:", iteraciones
+    if d==2:
+        print "El cero estimado de la funcion es:", xr
+        print "El numero de iteraciones fue:", iteraciones
+    elif d==1:
+        print "El cero estimado de la funcion es:",xr
 # Metodo de Newton-Raphson
-# Parametros: aproximacion inicial (x0), error estimado (er), iteraciones (n), forma de desplegar la respuesta (f)
-def newtonraphson(x0,er,n):
-    x0 = float(x0)
-    resultados = [[0,x0,None]]
-    x = symbols('x')
-    ff = x**3 + 3*x -1
-    fprima = diff(ff,"x")
-    for i in range(1,n):
-        try:
-            xsuc = x0 - f(x0)/derivada(str(fprima),x0)
-        except:
-            print "Division entre cero, error."
-            break
-        ea = 100*(abs(xsuc-x0/xsuc))
-        r = [i,xsuc,ea]
-        resultados.append(r)
-        x0 = xsuc
-    return resultados
-newtonraphson(1,0.00001,20)
+# Parametros: aproximacion inicial (x), imagen de la funcion (fx), error estimado(er) y forma de desplegar la respuesta (d)
+def newtonraphson(x,fx,er,d):
+    iteraciones = 0
+    while fx > er:
+        xi = x-f(x)/derivada(x,er)
+        x = xi
+        iteraciones = iteraciones+1
+        fx = abs(f(x))
+    if d==2:
+        print "El cero estimado es:",x
+        print "El numero de iteraciones fue:",iteraciones
+    if d==1:
+        print "El cero estimado es:",x
